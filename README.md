@@ -8,7 +8,7 @@
 ░░░█ LM Studio MCP Bridge for Claude Code █░░░
 ```
 
-# LMStudio MCP
+# LMStudio MCP Bridge
 
 A robust, MCP (Model Context Protocol) bridge for LMStudio that enables Claude Code and Desktop to leverage local LLMs for code assistance tasks. Made specifically to use `gpt-oss-20b` model locally and offset token usage for Claude Code.
 
