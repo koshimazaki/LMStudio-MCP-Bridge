@@ -217,68 +217,6 @@ pm2 start dist/index.js --name lmstudio-mcp \
 pm2 monit lmstudio-mcp
 ```
 
-### Systemd Service
-
-```ini
-[Unit]
-Description=LM Studio MCP Bridge
-After=network.target
-
-[Service]
-Type=simple
-User=youruser
-WorkingDirectory=/path/to/LMStudio-MCP
-ExecStart=/usr/bin/node dist/index.js
-Restart=on-failure
-RestartSec=10
-StandardOutput=append:/var/log/lmstudio-mcp.log
-StandardError=append:/var/log/lmstudio-mcp-error.log
-
-[Install]
-WantedBy=multi-user.target
-```
-
-## Monitoring & Maintenance
-
-### Health Checks
-
-```bash
-# Manual health check
-npm run health
-
-# Automated monitoring (cron)
-*/5 * * * * /path/to/node /path/to/dist/health-check.js || systemctl restart lmstudio-mcp
-```
-
-### Log Rotation
-
-```bash
-# /etc/logrotate.d/lmstudio-mcp
-/path/to/LMStudio-MCP/logs/*.log {
-    daily
-    rotate 7
-    compress
-    delaycompress
-    notifempty
-    create 0640 user group
-    sharedscripts
-    postrotate
-        pm2 reload lmstudio-mcp
-    endscript
-}
-```
-
-
-### Debug Mode
-
-```bash
-# Enable debug logging
-LOG_LEVEL=debug npm start
-
-# Verbose output with metrics
-DEBUG=* npm start
-```
-
 
 ## License
 
