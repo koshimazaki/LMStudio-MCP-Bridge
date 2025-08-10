@@ -172,7 +172,7 @@ Built on four main service interfaces:
   // Test 6: Test with actual cyber-code file
   console.log('📄 Test 6: Process actual cyber-code documentation...\n');
   try {
-    const cyberCodePath = '/Users/radek/Documents/GIthub/ClaudeCodeSetup/cyber-code/README-CORE-SERVICES.md';
+    const cyberCodePath = 'filepath here';
     
     try {
       await fs.access(cyberCodePath);
