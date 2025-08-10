@@ -39,6 +39,45 @@ export const GenerateTestsSchema = z.object({
   coverageTarget: z.number().min(0).max(100).default(80)
 });
 
+export const ProcessMarkdownSchema = z.object({
+  filePath: z.string().optional(),
+  content: z.string().optional(),
+  action: z.enum(['streamline', 'technical', 'executive', 'api', 'tutorial']).default('streamline'),
+  format: z.enum(['markdown', 'html', 'plain', 'structured']).default('markdown'),
+  sections: z.array(z.string()).optional(),
+  maxLength: z.number().int().positive().max(10000).default(2000)
+}).refine(data => data.filePath || data.content, {
+  message: 'Either filePath or content must be provided'
+});
+
+export const AnalyzeMarkdownSchema = z.object({
+  filePath: z.string().optional(),
+  content: z.string().optional(),
+  checks: z.array(z.enum(['completeness', 'clarity', 'structure', 'examples', 'consistency'])).default(['completeness', 'clarity', 'structure'])
+}).refine(data => data.filePath || data.content, {
+  message: 'Either filePath or content must be provided'
+});
+
+export const SummarizeMarkdownSchema = z.object({
+  filePath: z.string().optional(),
+  content: z.string().optional(),
+  style: z.enum(['key-findings', 'tldr', 'overview', 'actionable', 'technical-summary']).default('key-findings'),
+  maxPoints: z.number().int().positive().max(20).default(5),
+  maxWords: z.number().int().positive().max(1000).default(300)
+}).refine(data => data.filePath || data.content, {
+  message: 'Either filePath or content must be provided'
+});
+
+export const TagMarkdownSchema = z.object({
+  filePath: z.string().optional(),
+  content: z.string().optional(),
+  maxTags: z.number().int().positive().max(30).default(10),
+  categories: z.array(z.enum(['technology', 'framework', 'language', 'pattern', 'domain', 'feature', 'tool'])).optional(),
+  includeMetadata: z.boolean().default(false)
+}).refine(data => data.filePath || data.content, {
+  message: 'Either filePath or content must be provided'
+});
+
 // Response validation schemas
 export const LMStudioResponseSchema = z.object({
   id: z.string(),
